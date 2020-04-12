@@ -26,6 +26,7 @@ public class TimeClientHandler extends ChannelInboundHandlerAdapter {
         buf = null;
     }
 
+    /*
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         ByteBuf in = (ByteBuf) msg;
@@ -39,6 +40,14 @@ public class TimeClientHandler extends ChannelInboundHandlerAdapter {
             System.out.println(new Date(currentTimeMillis));
             ctx.close();
         }
+    }
+    */
+
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        UnixTime unixTime = (UnixTime) msg;
+        System.out.println(unixTime);
+        ctx.close();
     }
 
     @Override

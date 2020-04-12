@@ -13,6 +13,7 @@ public class TimeServerHandler extends ChannelInboundHandlerAdapter {
      * @throws Exception
      */
     @Override
+    @Deprecated
     public void channelActive(final ChannelHandlerContext ctx) throws Exception {
         final ByteBuf time = ctx.alloc().buffer(4);
         time.writeInt((int) (System.currentTimeMillis() / 1000L + 2208988800L));
@@ -26,6 +27,12 @@ public class TimeServerHandler extends ChannelInboundHandlerAdapter {
                 ctx.close();
             }
         });
+    }
+
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        ChannelFuture future = ctx.writeAndFlush(new UnixTime());
+        future.addListener(ChannelFutureListener.CLOSE);
     }
 
     @Override
