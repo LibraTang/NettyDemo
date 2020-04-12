@@ -9,6 +9,8 @@ import java.util.Date;
 /**
  * 为了解决基于流的传输方式的问题（数据碎片化），有几种方式：
  * 1. 最简单的方式，创建一个内部缓冲区，积累到一定量的时候再处理
+ * 但是这种方式会让handler变得复杂，后期难以维护
+ * 2. 将handler的功能拆分出来，降低单个handler的复杂度，最后向ChannelPipeline添加多个handler
  */
 public class TimeClientHandler extends ChannelInboundHandlerAdapter {
     private ByteBuf buf;
